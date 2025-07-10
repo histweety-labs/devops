@@ -1,0 +1,17 @@
+# Dynamic configuration for dashboard
+http:
+  routers:
+    dashboard:
+      rule: "Host(`traefik.histweetyy.cc`)"
+      entrypoints:
+        - websecure
+      service: api@internal
+      tls: true
+      middlewares:
+        - dashboard-auth
+
+  middlewares:
+    dashboard-auth:
+      basicAuth:
+        users:
+          - "arthadede:$apr1$fObFuvmn$ejFwChgZ9lxveo23.R1Ff1"

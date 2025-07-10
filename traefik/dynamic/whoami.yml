@@ -1,0 +1,15 @@
+# Dynamic configuration for whoami service
+http:
+  routers:
+    whoami:
+      rule: "Host(`whoami.histweetyy.cc`)"
+      entrypoints:
+        - websecure
+      service: whoami
+      tls: true
+
+  services:
+    whoami:
+      loadBalancer:
+        servers:
+          - url: "http://whoami:80"

@@ -14,9 +14,6 @@ entryPoints:
       tls: true
 
 providers:
-  file:
-    directory: "/dynamic"
-    watch: true
   swarm:
     endpoint: "unix:///var/run/docker.sock"
     watch: true

@@ -21,7 +21,7 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock:ro
       - ./traefik/certs:/certs:ro
       - ./traefik/dynamic:/dynamic:ro
-      - ./traefik/traefik.yml:/etc/traefik/traefik.yml:ro
+      - ./traefik/traefik.yaml:/etc/traefik/traefik.yaml:ro
 
     deploy:
       mode: replicated

@@ -17,8 +17,8 @@ services:
 
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro   # Swarm API socket
-      - ./certs:/certs:ro
-      - ./dynamic:/dynamic:ro
+      - ./traefik/certs:/certs:ro
+      - ./traefik/dynamic:/dynamic:ro
 
     command:
       - "--entrypoints.web.address=:80"

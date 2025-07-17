@@ -21,6 +21,7 @@ services:
       - ./traefik/dynamic:/dynamic:ro
 
     command:
+      # HTTP EntryPoint
       - "--entrypoints.web.address=:80"
 
       - "--entrypoints.web.http.redirections.entrypoint.to=websecure"
@@ -31,6 +32,7 @@ services:
       - "--entrypoints.websecure.http.tls=true"
 
       - "--providers.file.filename=/dynamic/tls.yaml"
+
 
       - "--providers.swarm.endpoint=unix:///var/run/docker.sock"
 
@@ -58,17 +60,19 @@ services:
       labels:
         - "traefik.enable=true"
 
-        - "traefik.http.routers.dashboard.rule=Host(`traefik.histweetyy.cc`)"
+        # Dashboard router
+        - "traefik.http.routers.dashboard.rule=Host(`dashboard.histweetyy.cc`)"
         - "traefik.http.routers.dashboard.entrypoints=websecure"
         - "traefik.http.routers.dashboard.service=api@internal"
         - "traefik.http.routers.dashboard.tls=true"
 
-        - "traefik.http.middlewares.dashboard-auth.basicauth.users=arthadede:$$apr1$$gT5LN1Y/$$7x3Tel4QmMyxnEybuz8za/"
+        # Basic‑auth middleware
+        - "traefik.http.middlewares.dashboard-auth.basicauth.users=admin:$$apr1$$ZQDzdNNr$$wQil8M17Yfh7v7mUB1Vxq1"
         - "traefik.http.routers.dashboard.middlewares=dashboard-auth@swarm"
 
+        # Service hint
         - "traefik.http.services.traefik.loadbalancer.server.port=8080"
 
-  # Deploy the Whoami application
   whoami:
     image: traefik/whoami
     networks:
@@ -79,7 +83,7 @@ services:
         - "traefik.http.routers.whoami.rule=Host(`whoami.histweetyy.cc`)"
         - "traefik.http.routers.whoami.entrypoints=websecure"
         - "traefik.http.routers.whoami.tls=true"
-        - "traefik.http.services.whoami.loadbalancer.server.port=80"
+        - traefik.http.services.whoami.loadbalancer.server.port=80
 
 networks:
   traefik_proxy:
